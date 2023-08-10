@@ -4,8 +4,9 @@ import (
 	"backend"
 	db "backend/pkg/db/sqlite"
 	"backend/pkg/websocket"
-	"fmt"
+	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -54,10 +55,16 @@ func main() {
 		websocket.ServeWs(hub, w, r)
 	})
 
-	fmt.Println("Starting server at port 8080")
+	// fmt.Println("Starting server at port 8080")
 
-	err1 := http.ListenAndServe(":8080", mux)
-	if err1 != nil {
-		fmt.Println(err1)
+	// err1 := http.ListenAndServe(":8080", mux)
+	// if err1 != nil {
+	// 	fmt.Println(err1)
+	// }
+
+	port := os.Getenv("PORT")
+	err := http.ListenAndServe(":"+port, nil)
+	if err != nil {
+		log.Fatal(err)
 	}
 }
