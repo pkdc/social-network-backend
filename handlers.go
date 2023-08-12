@@ -36,10 +36,10 @@ func WriteHttpHeader(jsonResp []byte, w http.ResponseWriter) {
 func EnableCors(w *http.ResponseWriter) {
 	// origin := r.Header.Get("Origin")
 	// (*w).Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
-	// (*w).Header().Set("Access-Control-Allow-Origin", "https://notfacebook.netlify.app")
+	(*w).Header().Set("Access-Control-Allow-Origin", "https://notfacebook.netlify.app")
 	// (*w).Header().Set("Access-Control-Allow-Origin", origin)
 	// (*w).Header().Set("Access-Control-Allow-Origin", "*")
-	(*w).Header().Set("Access-Control-Allow-Origin", "https://cors-anywhere.herokuapp.com/https://notfacebook.netlify.app")
+	// (*w).Header().Set("Access-Control-Allow-Origin", "https://cors-anywhere.herokuapp.com/https://notfacebook.netlify.app")
 	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Authorization")
 	(*w).Header().Set("Access-Control-Allow-Credentials", "true")
