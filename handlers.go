@@ -33,7 +33,7 @@ func WriteHttpHeader(jsonResp []byte, w http.ResponseWriter) {
 	w.Write(jsonResp)
 }
 
-func EnableCors(w *http.ResponseWriter, r *http.Request) {
+func EnableCors(w *http.ResponseWriter) {
 	origin := r.Header.Get("Origin")
 	// (*w).Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	// (*w).Header().Set("Access-Control-Allow-Origin", "https://notfacebook.netlify.app")
@@ -42,10 +42,6 @@ func EnableCors(w *http.ResponseWriter, r *http.Request) {
 	(*w).Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
 	(*w).Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Authorization")
 	(*w).Header().Set("Access-Control-Allow-Credentials", "true")
-
-	if r.Method == http.MethodOptions {
-
-	}
 }
 
 func Homehandler() http.HandlerFunc {
