@@ -26,7 +26,8 @@ func main() {
 
 	// Create a new CORS middleware
 	corsHandler := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"},
+		// AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedOrigins:   []string{"https://notfacebook.netlify.app"},
 		AllowedMethods:   []string{"GET", "POST", "OPTIONS", "PUT", "DELETE"},
 		AllowedHeaders:   []string{"Content-Type", "Accept", "Content-Length", "Authorization"},
 		AllowCredentials: true,
