@@ -7,6 +7,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/rs/cors"
 )
 
 func main() {
@@ -22,35 +24,43 @@ func main() {
 
 	// exec.Command("xdg-open", "https://localhost:8080").Start()
 
+	// Create a new CORS middleware
+	corsHandler := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:3000"},
+		AllowedMethods:   []string{"GET", "POST", "OPTIONS", "PUT", "DELETE"},
+		AllowedHeaders:   []string{"Content-Type", "Accept", "Content-Length", "Authorization"},
+		AllowCredentials: true,
+	})
+
 	mux := http.NewServeMux()
 
-	mux.Handle("/", backend.Homehandler())
-	mux.Handle("/session", backend.SessionHandler())
-	mux.Handle("/login", backend.Loginhandler())
-	mux.Handle("/logout", backend.Logouthandler())
-	mux.Handle("/reg", backend.Reghandler())
-	mux.Handle("/user", backend.Userhandler())
-	mux.Handle("/privacy", backend.PrivacyHandler())
-	mux.Handle("/user-follower", backend.UserFollowerHandler())
-	mux.Handle("/user-following", backend.UserFollowingHandler())
-	mux.Handle("/user-follow-status", backend.UserFollowerStatusHandler())
-	mux.Handle("/close-friend", backend.CloseFriendHandler())
-	mux.Handle("/user-message", backend.UserMessageHandler())
-	mux.Handle("/post", backend.Posthandler())
-	mux.Handle("/post-comment", backend.PostCommentHandler())
-	mux.Handle("/group", backend.Grouphandler())
-	mux.Handle("/group-member", backend.GroupMemberHandler())
-	mux.Handle("/group-request", backend.GroupRequestHandler())
-	mux.Handle("/group-post", backend.GroupPostHandler())
-	mux.Handle("/group-post-comment", backend.GroupPostCommentHandler())
-	mux.Handle("/group-event", backend.GroupEventHandler())
-	mux.Handle("/group-event-member", backend.GroupEventMemberHandler())
-	mux.Handle("/group-message", backend.GroupMessageHandler())
-	mux.Handle("/group-request-by-user", backend.GroupRequestByUserHandler())
+	mux.Handle("/", corsHandler.Handler(backend.Homehandler()))
+	mux.Handle("/session", corsHandler.Handler(backend.SessionHandler()))
+	mux.Handle("/login", corsHandler.Handler(backend.Loginhandler()))
+	mux.Handle("/logout", corsHandler.Handler(backend.Logouthandler()))
+	mux.Handle("/reg", corsHandler.Handler(backend.Reghandler()))
+	mux.Handle("/user", corsHandler.Handler(backend.Userhandler()))
+	mux.Handle("/privacy", corsHandler.Handler(backend.PrivacyHandler()))
+	mux.Handle("/user-follower", corsHandler.Handler(backend.UserFollowerHandler()))
+	mux.Handle("/user-following", corsHandler.Handler(backend.UserFollowingHandler()))
+	mux.Handle("/user-follow-status", corsHandler.Handler(backend.UserFollowerStatusHandler()))
+	mux.Handle("/close-friend", corsHandler.Handler(backend.CloseFriendHandler()))
+	mux.Handle("/user-message", corsHandler.Handler(backend.UserMessageHandler()))
+	mux.Handle("/post", corsHandler.Handler(backend.Posthandler()))
+	mux.Handle("/post-comment", corsHandler.Handler(backend.PostCommentHandler()))
+	mux.Handle("/group", corsHandler.Handler(backend.Grouphandler()))
+	mux.Handle("/group-member", corsHandler.Handler(backend.GroupMemberHandler()))
+	mux.Handle("/group-request", corsHandler.Handler(backend.GroupRequestHandler()))
+	mux.Handle("/group-post", corsHandler.Handler(backend.GroupPostHandler()))
+	mux.Handle("/group-post-comment", corsHandler.Handler(backend.GroupPostCommentHandler()))
+	mux.Handle("/group-event", corsHandler.Handler(backend.GroupEventHandler()))
+	mux.Handle("/group-event-member", corsHandler.Handler(backend.GroupEventMemberHandler()))
+	mux.Handle("/group-message", corsHandler.Handler(backend.GroupMessageHandler()))
+	mux.Handle("/group-request-by-user", corsHandler.Handler(backend.GroupRequestByUserHandler()))
 
-	mux.Handle("/private-chat-item", backend.PrivateChatItemHandler())
-	mux.Handle("/group-chat-item", backend.GroupChatItemHandler())
-	mux.Handle("/group-chat-seen", backend.GroupChatSeenHandler())
+	mux.Handle("/private-chat-item", corsHandler.Handler(backend.PrivateChatItemHandler()))
+	mux.Handle("/group-chat-item", corsHandler.Handler(backend.GroupChatItemHandler()))
+	mux.Handle("/group-chat-seen", corsHandler.Handler(backend.GroupChatSeenHandler()))
 	mux.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
 		websocket.ServeWs(hub, w, r)
 	})

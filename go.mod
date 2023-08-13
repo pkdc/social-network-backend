@@ -7,6 +7,8 @@ require (
 	github.com/gorilla/websocket v1.4.2
 )
 
+require github.com/rs/cors v1.9.0 // indirect
+
 require (
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
