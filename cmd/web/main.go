@@ -74,7 +74,7 @@ func main() {
 	// }
 
 	port := os.Getenv("PORT")
-	err := http.ListenAndServe(":"+port, nil)
+	err := http.ListenAndServe(":"+port, mux)
 	if err != nil {
 		log.Fatal(err)
 	}
