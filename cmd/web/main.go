@@ -13,7 +13,7 @@ import (
 
 func main() {
 
-	db.RunMigration()
+	// db.RunMigration()
 	db.DbConnect()
 	// db.RemoveMigration(m)
 	// db.InsertMockUserData()
@@ -75,7 +75,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	err := http.ListenAndServe(":"+port, mux)
-	if err != nil {
-		log.Fatal(err)
-	}
+    if err != nil {
+        log.Fatal(err)
+    }
 }
