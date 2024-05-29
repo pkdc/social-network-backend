@@ -27,7 +27,7 @@ func main() {
 	// Create a new CORS middleware
 	corsHandler := cors.New(cors.Options{
 		// AllowedOrigins:   []string{"http://localhost:3000"},
-		AllowedOrigins:   []string{"https://notfacebook.netlify.app"},
+		AllowedOrigins:   []string{"https://socialnetwork123.netlify.app"},
 		AllowedMethods:   []string{"GET", "POST", "OPTIONS", "PUT", "DELETE"},
 		AllowedHeaders:   []string{"Content-Type", "Accept", "Content-Length", "Authorization"},
 		AllowCredentials: true,
@@ -62,7 +62,10 @@ func main() {
 	mux.Handle("/private-chat-item", corsHandler.Handler(backend.PrivateChatItemHandler()))
 	mux.Handle("/group-chat-item", corsHandler.Handler(backend.GroupChatItemHandler()))
 	mux.Handle("/group-chat-seen", corsHandler.Handler(backend.GroupChatSeenHandler()))
-	mux.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+	// mux.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+	// 	websocket.ServeWs(hub, w, r)
+	// })
+	mux.HandleFunc("/wss", func(w http.ResponseWriter, r *http.Request) {
 		websocket.ServeWs(hub, w, r)
 	})
 
@@ -75,7 +78,7 @@ func main() {
 
 	port := os.Getenv("PORT")
 	err := http.ListenAndServe(":"+port, mux)
-    if err != nil {
-        log.Fatal(err)
-    }
+	if err != nil {
+		log.Fatal(err)
+	}
 }
